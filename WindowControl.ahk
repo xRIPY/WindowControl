@@ -38,7 +38,7 @@ I leave here some code templates  in case you need it: (put them under this sect
 	Send {Up}
 	return
 
-; send the input to the anchor window, without it beign on focus, works well enough with browser stuff, but with applications it works rarely.
+; send the input to the anchor window, without it beign on focus, works well enough with browser stuff, but with applications it rarely works.
 #Up::
 	ControlSend,ahk_parent, {Up},ahk_id %AnchorWindow%    
 	return
@@ -142,7 +142,7 @@ SetTimer, RemoveToolTip, -5000
 return
 
 ; Bring anchor to focus
-#Z::
+#Z:: ; WIN+Z
 WinGet, CurrentWindow, ID, A ; Get the Window ID
 WinActivate, ahk_id %AnchorWindow% 
 While ( GetKeyState( "Z","P" ) ) { ; While "Z" is pressed, just loop until its not.
@@ -185,7 +185,7 @@ return
 
 ; ----- OTHER ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------[
 
-;Sends the equivalent [Arrow key] input.
+;Sends the equivalent [Arrow key] input. (ALT+W = UP)
 !W::
 	Send {Up}
 	return
@@ -198,6 +198,20 @@ return
 !D::
 	Send {Right}
 	return
+
+; ----- THE "ANTI-SGAMO" BUTTON ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------[
+
+#X:: ; WIN+X
+WinGet, CurrentWindow, ID, A ; Get the Window ID
+WinMinimize, ahk_id %CurrentWindow% 
+While ( GetKeyState( "X","P" ) ) { ; While "Z" is pressed, just loop until its not.
+		Sleep, 5
+		if ( GetKeyState( "Ctrl","P" ) ) { ; if pressed Ctrl, the window will remain open, just alt-tab to get to the previous one
+			return
+		}
+	}
+WinRestore, ahk_id %CurrentWindow%   
+return
 
 ; ----- CLOSE -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------[
 
